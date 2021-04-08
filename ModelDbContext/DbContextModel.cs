@@ -11,7 +11,7 @@ namespace ModelDbContext
     public class DbContextModel: BaseDbContext
     {
         private readonly ConnectionStringSettings _connectionStringSettings;
-        public DbContextModel(ConnectionStringSettings connectionStringSettings)
+        public DbContextModel(DbContextOptions<DbContextModel> options, ConnectionStringSettings connectionStringSettings): base(options)
         {
             _connectionStringSettings = connectionStringSettings;
         }

@@ -12,9 +12,9 @@ namespace EFConnection
         DbSet<TEntity> Repository<TEntity>() where TEntity : class;
         int SaveChanges();
         Task<int> SaveChangesAsync();
-        TDocument QueryForObject<TDocument>(string sql, IDictionary<string, object> param = null) where TDocument : class;
-        Task<TDocument> QueryForObjectAsync<TDocument>(string sql, IDictionary<string, object> param = null) where TDocument : class;
-        List<TDocument> QueryForList<TDocument>(string sql, IDictionary<string, object> param = null) where TDocument : class;
-        Task<List<TDocument>> QueryForListAsync<TDocument>(string sql, IDictionary<string, object> param = null) where TDocument : class;
+        TDocument QueryForObject<TDocument>(string sql, bool excuteStored = false, IDictionary<string, object> param = null);
+        Task<TDocument> QueryForObjectAsync<TDocument>(string sql, bool excuteStored = false, IDictionary<string, object> param = null);
+        List<TDocument> QueryForList<TDocument>(string sql, bool excuteStored = false, IDictionary<string, object> param = null);
+        Task<List<TDocument>> QueryForListAsync<TDocument>(string sql, bool excuteStored = false, IDictionary<string, object> param = null);
     }
 }

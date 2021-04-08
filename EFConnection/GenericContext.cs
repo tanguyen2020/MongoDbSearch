@@ -26,24 +26,24 @@ namespace EFConnection
             return await _dbContext.SaveChangesAsync();
         }
 
-        public TDocument QueryForObject<TDocument>(string sql, IDictionary<string, object> param = null) where TDocument : class
+        public TDocument QueryForObject<TDocument>(string sql, bool executeStored = false, IDictionary<string, object> param = null)
         {
-            return _dbContext.QueryForObjectAsync<TDocument>(sql, param).Result;
+            return _dbContext.QueryForObjectAsync<TDocument>(sql, executeStored, param).Result;
         }
 
-        public async Task<TDocument> QueryForObjectAsync<TDocument>(string sql, IDictionary<string, object> param = null) where TDocument : class
+        public async Task<TDocument> QueryForObjectAsync<TDocument>(string sql, bool executeStored = false, IDictionary<string, object> param = null)
         {
-            return await _dbContext.QueryForObjectAsync<TDocument>(sql, param);
+            return await _dbContext.QueryForObjectAsync<TDocument>(sql, executeStored, param);
         }
 
-        public List<TDocument> QueryForList<TDocument>(string sql, IDictionary<string, object> param = null) where TDocument : class
+        public List<TDocument> QueryForList<TDocument>(string sql, bool executeStored = false, IDictionary<string, object> param = null)
         {
-            return _dbContext.QueryForListAsync<TDocument>(sql, param).Result;
+            return _dbContext.QueryForListAsync<TDocument>(sql, executeStored, param).Result;
         }
 
-        public async Task<List<TDocument>> QueryForListAsync<TDocument>(string sql, IDictionary<string, object> param = null) where TDocument : class
+        public async Task<List<TDocument>> QueryForListAsync<TDocument>(string sql, bool executeStored = false, IDictionary<string, object> param = null)
         {
-            return await _dbContext.QueryForListAsync<TDocument>(sql, param);
+            return await _dbContext.QueryForListAsync<TDocument>(sql, executeStored, param);
         }
 
         public void Dispose()
