@@ -1,7 +1,5 @@
-﻿using Nest;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BaseObject.DataObject;
+using Nest;
 using System.Threading.Tasks;
 
 namespace CacheOrSearchEngine.ElasticSearch
@@ -23,7 +21,7 @@ namespace CacheOrSearchEngine.ElasticSearch
         /// <param name="indexName"></param>
         /// <param name="size"></param>
         /// <returns></returns>
-        Task<ISearchResponse<ElasticModel>> SearchAsync(string strText, string indexName, int size = 10);
+        Task<ISearchResponse<DataObject>> SearchAsync(string strText, string indexName, int size = 10);
 
         /// <summary>
         /// Delete for index ElasticSearch

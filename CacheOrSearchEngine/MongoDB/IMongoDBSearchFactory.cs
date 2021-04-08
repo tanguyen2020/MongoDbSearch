@@ -1,5 +1,4 @@
 ﻿using MongoDB.Driver;
-using System;
 
 namespace CacheOrSearchEngine.MongoDB
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FactoryConnection.BaseObject;
+using BaseObject.DataObject;
 using FactoryConnection.ConnectionFactory;
 
 namespace ExcuteService

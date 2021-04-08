@@ -1,9 +1,4 @@
 ﻿using Nest;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Elasticsearch.Net;
-using System.Threading.Tasks;
 
 namespace CacheOrSearchEngine.ElasticSearch
 {

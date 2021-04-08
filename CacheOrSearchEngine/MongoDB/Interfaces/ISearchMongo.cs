@@ -1,5 +1,4 @@
-﻿using CacheOrSearchEngine.MongoDB.SearchLikeCharacters;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BaseObject.DataObject;
 
 namespace CacheOrSearchEngine.MongoDB.Interfaces

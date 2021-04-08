@@ -1,8 +1,5 @@
 ﻿using BaseObject.DataObject;
-using CacheOrSearchEngine.MongoDB.SearchLikeCharacters;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CacheOrSearchEngine.MongoDB.Interfaces

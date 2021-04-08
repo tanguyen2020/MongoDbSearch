@@ -1,7 +1,5 @@
-﻿using Nest;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BaseObject.DataObject;
+using Nest;
 using System.Threading.Tasks;
 
 namespace CacheOrSearchEngine.ElasticSearch
@@ -34,12 +32,12 @@ namespace CacheOrSearchEngine.ElasticSearch
         /// <param name="indexName"></param>
         /// <param name="size"></param>
         /// <returns></returns>
-        public async Task<ISearchResponse<ElasticModel>> SearchAsync(string strText, string indexName, int size = 10)
+        public async Task<ISearchResponse<DataObject>> SearchAsync(string strText, string indexName, int size = 10)
         {
-            return await _elasticSearchFactory.ElasticClient.SearchAsync<ElasticModel>(
+            return await _elasticSearchFactory.ElasticClient.SearchAsync<DataObject>(
                 s => s.Index(indexName)
                 .Size(size)
-                .Query(q => q.MatchPhrasePrefix(m => m.Field(f => f.Name).Query(strText)))
+                .Query(q => q.MatchPhrasePrefix(m => m.Field(f => f["Name"]).Query(strText)))
                 .Sort(p => p.Descending(SortSpecialField.DocumentIndexOrder)));
         }
 
@@ -81,7 +79,7 @@ namespace CacheOrSearchEngine.ElasticSearch
         /// <param name="indexName"></param>
         /// <param name="size"></param>
         /// <returns></returns>
-        public ISearchResponse<ElasticModel> Search(string strText, string indexName, int size = 10) => SearchAsync(strText, indexName, size).Result;
+        public ISearchResponse<DataObject> Search(string strText, string indexName, int size = 10) => SearchAsync(strText, indexName, size).Result;
 
         /// <summary>
         /// Delete for index ElasticSearch

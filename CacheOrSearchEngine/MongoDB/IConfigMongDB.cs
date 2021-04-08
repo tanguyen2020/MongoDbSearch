@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CacheOrSearchEngine.MongoDB
+﻿namespace CacheOrSearchEngine.MongoDB
 {
     public interface IConfigMongDB
     {
