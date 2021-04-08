@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Threading.Tasks;
 using DatabaseContext;
 using EFConnection;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +15,7 @@ namespace ModelDbContext
         {
             _connectionStringSettings = connectionStringSettings;
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

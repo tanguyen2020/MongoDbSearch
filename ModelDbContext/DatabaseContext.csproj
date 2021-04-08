@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BaseObject\BaseObject.csproj" />
     <ProjectReference Include="..\EFConnection\EFConnection.csproj" />
   </ItemGroup>
 

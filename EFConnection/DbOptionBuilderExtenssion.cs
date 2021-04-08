@@ -10,7 +10,7 @@ namespace EFConnection
         public static DbContextOptionsBuilder UseDatabase(this DbContextOptionsBuilder optionsBuilder, string connectString)
         {
             string[] prefix = connectString.Split(':');
-            var prefixDbType = prefix[0].ToLower();
+            var prefixDbType = prefix[0].ToUpper();
             var prefixConnectString = prefix[1];
             switch (prefixDbType)
             {
