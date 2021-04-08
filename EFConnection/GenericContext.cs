@@ -26,24 +26,24 @@ namespace EFConnection
             return await _dbContext.SaveChangesAsync();
         }
 
-        public TDocument QueryForObject<TDocument>(string spname, IDictionary<string, object> param = null) where TDocument : class
+        public TDocument QueryForObject<TDocument>(string sql, IDictionary<string, object> param = null) where TDocument : class
         {
-            return _dbContext.QueryForObjectAsync<TDocument>(spname, param).Result;
+            return _dbContext.QueryForObjectAsync<TDocument>(sql, param).Result;
         }
 
-        public async Task<TDocument> QueryForObjectAsync<TDocument>(string spname, IDictionary<string, object> param = null) where TDocument : class
+        public async Task<TDocument> QueryForObjectAsync<TDocument>(string sql, IDictionary<string, object> param = null) where TDocument : class
         {
-            return await _dbContext.QueryForObjectAsync<TDocument>(spname, param);
+            return await _dbContext.QueryForObjectAsync<TDocument>(sql, param);
         }
 
-        public List<TDocument> QueryForList<TDocument>(string spname, IDictionary<string, object> param = null) where TDocument : class
+        public List<TDocument> QueryForList<TDocument>(string sql, IDictionary<string, object> param = null) where TDocument : class
         {
-            return _dbContext.QueryForListAsync<TDocument>(spname, param).Result;
+            return _dbContext.QueryForListAsync<TDocument>(sql, param).Result;
         }
 
-        public async Task<List<TDocument>> QueryForListAsync<TDocument>(string spname, IDictionary<string, object> param = null) where TDocument : class
+        public async Task<List<TDocument>> QueryForListAsync<TDocument>(string sql, IDictionary<string, object> param = null) where TDocument : class
         {
-            return await _dbContext.QueryForListAsync<TDocument>(spname, param);
+            return await _dbContext.QueryForListAsync<TDocument>(sql, param);
         }
 
         public void Dispose()
