@@ -21,9 +21,9 @@ namespace ADOConnection.ConnectionFactory
                 var prefixConnectString = prefix[1];
                 switch (prefixdb)
                 {
-                    case prefixConnection.MSSQL:
+                    case prefixDatabaseType.MSSQL:
                         execute = new ConnectionSql(this, prefixConnectString); break;
-                    case prefixConnection.ORACLE:
+                    case prefixDatabaseType.ORACLE:
                         execute = new ConnectionOracle(this, prefixConnectString); break;
                     default:
                         execute = new ConnectionPostgre(this, prefixConnectString); break;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EFConnection
 {
-    public class GenericDbContext<T> : IGenericDbContext<T> where T: BaseDbContext, IDisposable
+    public class GenericContext<T> : IGenericContext<T> where T: BaseDbContext, IDisposable
     {
         protected bool disposed = false;
         public readonly T _dbContext;

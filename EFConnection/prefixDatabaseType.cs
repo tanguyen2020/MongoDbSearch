@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ADOConnection.ConnectionFactory
+namespace EFConnection
 {
-    public static class prefixConnection
+    public static class prefixDatabaseType
     {
         public const string MSSQL = "MSSQL";
         public const string ORACLE = "ORACLE";

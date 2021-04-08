@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EFConnection
 {
-    public interface IGenericDbContext<T> where T: DbContext, IDisposable
+    public interface IGenericContext<T> where T: DbContext, IDisposable
     {
         DbSet<TEntity> Repository<TEntity>() where TEntity : class;
         int SaveChanges();
