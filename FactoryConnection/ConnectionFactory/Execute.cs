@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Dapper;
 using BaseObject.DataObject;
 
-namespace FactoryConnection.ConnectionFactory
+namespace ADOConnection.ConnectionFactory
 {
     public abstract class Execute : IExecute
     {

@@ -4,7 +4,7 @@ using System.Data.Common;
 using System.Text;
 using Npgsql;
 
-namespace FactoryConnection.ConnectionFactory.PostgreSql
+namespace ADOConnection.ConnectionFactory.PostgreSql
 {
     public class ConnectionPostgre : Execute
     {

@@ -5,7 +5,7 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FactoryConnection.ConnectionFactory
+namespace ADOConnection.ConnectionFactory
 {
     public interface IExecute: IDisposable
     {

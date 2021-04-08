@@ -4,7 +4,7 @@ using System.Data.Common;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FactoryConnection.ConnectionFactory
+namespace ADOConnection.ConnectionFactory
 {
     public class Transaction : ITransaction
     {

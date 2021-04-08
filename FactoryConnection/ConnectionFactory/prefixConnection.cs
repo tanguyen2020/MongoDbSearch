@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FactoryConnection.ConnectionFactory
+namespace ADOConnection.ConnectionFactory
 {
     public static class prefixConnection
     {

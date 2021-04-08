@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
-using FactoryConnection.ConnectionFactory.SqlServer;
-using FactoryConnection.ConnectionFactory.Oracle;
-using FactoryConnection.ConnectionFactory.PostgreSql;
+using ADOConnection.ConnectionFactory.SqlServer;
+using ADOConnection.ConnectionFactory.Oracle;
+using ADOConnection.ConnectionFactory.PostgreSql;
 
-namespace FactoryConnection.ConnectionFactory
+namespace ADOConnection.ConnectionFactory
 {
     public class Connection : IConnection
     {

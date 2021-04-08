@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using FactoryConnection.ConnectionFactory;
+using ADOConnection.ConnectionFactory;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FactoryConnection.DependencyInjection

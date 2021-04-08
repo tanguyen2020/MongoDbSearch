@@ -1,4 +1,4 @@
-﻿namespace FactoryConnection.ConnectionFactory
+﻿namespace ADOConnection.ConnectionFactory
 {
     public interface IConnection
     {

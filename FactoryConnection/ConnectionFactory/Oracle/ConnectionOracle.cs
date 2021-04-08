@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Text;
 
-namespace FactoryConnection.ConnectionFactory.Oracle
+namespace ADOConnection.ConnectionFactory.Oracle
 {
     public class ConnectionOracle : Execute
     {

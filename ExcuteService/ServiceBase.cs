@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseObject.DataObject;
-using FactoryConnection.ConnectionFactory;
+using ADOConnection.ConnectionFactory;
 
 namespace ExcuteService
 {

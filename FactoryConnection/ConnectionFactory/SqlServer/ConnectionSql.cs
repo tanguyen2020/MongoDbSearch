@@ -4,7 +4,7 @@ using System.Data.Common;
 using System.Text;
 using System.Data.SqlClient;
 
-namespace FactoryConnection.ConnectionFactory.SqlServer
+namespace ADOConnection.ConnectionFactory.SqlServer
 {
     public class ConnectionSql : Execute
     {
