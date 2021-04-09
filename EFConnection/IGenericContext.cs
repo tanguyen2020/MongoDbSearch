@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EFConnection
 {
-    public interface IGenericContext<T> where T: DbContext, IDisposable
+    public interface IGenericContext<TContext> where TContext : DbContext, IDisposable
     {
         DbSet<TEntity> Repository<TEntity>() where TEntity : class;
 

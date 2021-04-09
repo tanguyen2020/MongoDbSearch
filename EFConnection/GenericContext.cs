@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace EFConnection
 {
-    public class GenericContext<T> : IGenericContext<T> where T: BaseDbContext, IDisposable
+    public class GenericContext<TContext> : IGenericContext<TContext> where TContext : BaseDbContext, IDisposable
     {
         protected bool disposed = false;
-        public readonly T _dbContext;
+        public readonly TContext _dbContext;
         public DbSet<TEntity> Repository<TEntity>() where TEntity : class
         {
             return _dbContext.Repository<TEntity>();
@@ -68,6 +68,7 @@ namespace EFConnection
 
         public void Dispose()
         {
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
         public virtual void Dispose(bool disposing)
