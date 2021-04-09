@@ -36,14 +36,34 @@ namespace EFConnection
             return await _dbContext.QueryForObjectAsync<TDocument>(sql, executeStored, param);
         }
 
-        public List<TDocument> QueryForList<TDocument>(string sql, bool executeStored = false, IDictionary<string, object> param = null)
+        public IEnumerable<TDocument> QueryForList<TDocument>(string sql, bool executeStored = false, IDictionary<string, object> param = null)
         {
             return _dbContext.QueryForListAsync<TDocument>(sql, executeStored, param).Result;
         }
 
-        public async Task<List<TDocument>> QueryForListAsync<TDocument>(string sql, bool executeStored = false, IDictionary<string, object> param = null)
+        public async Task<IEnumerable<TDocument>> QueryForListAsync<TDocument>(string sql, bool executeStored = false, IDictionary<string, object> param = null)
         {
             return await _dbContext.QueryForListAsync<TDocument>(sql, executeStored, param);
+        }
+
+        public DataObject QueryForObject(string sql, bool executeStored = false, IDictionary<string, object> param = null)
+        {
+            return _dbContext.QueryForObjectAsync<DataObject>(sql, executeStored, param).Result;
+        }
+
+        public async Task<DataObject> QueryForObjectAsync(string sql, bool executeStored = false, IDictionary<string, object> param = null)
+        {
+            return await _dbContext.QueryForObjectAsync<DataObject>(sql, executeStored, param);
+        }
+
+        public IEnumerable<DataObject> QueryForList(string sql, bool executeStored = false, IDictionary<string, object> param = null)
+        {
+            return _dbContext.QueryForListAsync<DataObject>(sql, executeStored, param).Result;
+        }
+
+        public async Task<IEnumerable<DataObject>> QueryForListAsync(string sql, bool executeStored = false, IDictionary<string, object> param = null)
+        {
+            return await _dbContext.QueryForListAsync<DataObject>(sql, executeStored, param);
         }
 
         public void Dispose()

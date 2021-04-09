@@ -8,88 +8,92 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Data;
 using BaseObject.DataObject;
 using System.Linq;
+using Dapper;
 
 namespace EFConnection
 {
-    public class BaseDbContext: DbContext
+    public class BaseDbContext : DbContext
     {
-        public BaseDbContext(DbContextOptions options): base(options)
+        public BaseDbContext(DbContextOptions options) : base(options)
         {
 
         }
-        public virtual DbSet<T> Repository<T>() where T: class
+        public virtual DbSet<T> Repository<T>() where T : class
         {
             return base.Set<T>();
         }
 
+        /// <summary>
+        /// Saves all changes made in this context to the database.
+        /// <para>
+        /// Returns:
+        ///         The number of state entries written to the database.
+        /// </para>
+        /// </summary>
+        /// <returns></returns>
         public override int SaveChanges()
         {
             return base.SaveChanges();
         }
 
+        /// <summary>
+        /// Saves all changes made in this context to the database.
+        /// <para>
+        /// Returns:
+        ///         A task that represents the asynchronous save operation. The task result contains
+        ///         the number of state entries written to the database
+        /// </para>
+        /// </summary>
+        /// <returns></returns>
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return base.SaveChangesAsync(cancellationToken);
         }
 
+        /// <summary>
+        /// Execute a single-row query asynchronously using Task.
+        /// <para>
+        /// Returns:
+        ///         A sequence of data of TDocument
+        /// </para>
+        /// </summary>
+        /// <typeparam name="TDocument"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="executeStored"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
         public async Task<TDocument> QueryForObjectAsync<TDocument>(string sql, bool executeStored = false, IDictionary<string, object> param = null)
         {
-            DataObject dataObject = new DataObject();
-            using (var command = base.Database.GetDbConnection().CreateCommand())
-            {
-                command.CommandText = sql;
-                command.CommandType = executeStored ? CommandType.StoredProcedure : CommandType.Text;
-                if (param != null)
-                    command.Parameters.Add(ParseParameters(param));
-                var reader = await command.ExecuteReaderAsync();
-                if (reader.HasRows)
-                {
-                    DataTable table = new DataTable();
-                    table.Load(reader);
-                    foreach(DataRow r in table.Rows)
-                    {
-                        foreach(DataColumn c in table.Columns)
-                        {
-                            dataObject.Add(c.ColumnName, r[c]);
-                        }
-                    }
-                }
-            }
-            return (TDocument)Convert.ChangeType(dataObject, typeof(TDocument));
+            if (executeStored)
+                return await base.Database.GetDbConnection().QueryFirstAsync<TDocument>($"Exec {sql}", ParseParameters(param));
+            else
+                return await base.Database.GetDbConnection().QueryFirstAsync<TDocument>(sql, ParseParameters(param));
         }
 
-        public async Task<List<TDocument>> QueryForListAsync<TDocument>(string sql, bool executeStored = false, IDictionary<string, object> param = null)
+        /// <summary>
+        /// Execute a query asynchronously using Task.
+        /// <para>
+        /// Returns:
+        ///         A sequence of data of TDocument
+        /// </para>
+        /// </summary>
+        /// <typeparam name="TDocument"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="executeStored"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<TDocument>> QueryForListAsync<TDocument>(string sql, bool executeStored = false, IDictionary<string, object> param = null)
         {
-            List<DataObject> dataObjects = new List<DataObject>();
-            using (var command = base.Database.GetDbConnection().CreateCommand())
-            {
-                command.CommandText = sql;
-                command.CommandType = executeStored ? CommandType.StoredProcedure : CommandType.Text;
-                if (param != null)
-                    command.Parameters.Add(ParseParameters(param));
-                var reader = await command.ExecuteReaderAsync();
-                if (reader.HasRows)
-                {
-                    DataObject objData = new DataObject();
-                    DataTable table = new DataTable();
-                    table.Load(reader);
-                    foreach (DataRow r in table.Rows)
-                    {
-                        foreach (DataColumn c in table.Columns)
-                        {
-                            objData.Add(c.ColumnName, r[c]);
-                        }
-                        dataObjects.Add(objData);
-                    }
-                }
-            }
-            return dataObjects.Cast<TDocument>().ToList();
+            if (executeStored)
+                return await base.Database.GetDbConnection().QueryAsync<TDocument>($"Exec {sql}", ParseParameters(param));
+            else
+                return await base.Database.GetDbConnection().QueryAsync<TDocument>(sql, ParseParameters(param));
         }
 
         public Dictionary<string, object> ParseParameters(IDictionary<string, object> param)
         {
             var parameters = new Dictionary<string, object>();
-            foreach(var i in param)
+            foreach (var i in param)
             {
                 parameters.Add($"@{i.Key}", i.Value ?? DBNull.Value);
             }

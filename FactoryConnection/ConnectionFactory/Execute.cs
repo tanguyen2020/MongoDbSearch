@@ -25,16 +25,35 @@ namespace ADOConnection.ConnectionFactory
         {
             return new Transaction(dbConnection.BeginTransactionAsync(isolationLevel).Result);
         }
+
         public async Task<DataObject> QueryForObject(string statement, DataObject param = null)
         {
             return await dbConnection.QuerySingleAsync<DataObject>(statement, param);
         }
+
+        public async Task<TDocument> QueryForObject<TDocument>(string statement, DataObject param = null)
+        {
+            return await dbConnection.QuerySingleAsync<TDocument>(statement, param);
+        }
+
         public async Task<DataObject> QueryForObject(string statement, IDictionary<string, object> param = null) => await QueryForObject(statement, param);
+
+        public async Task<TDocument> QueryForObject<TDocument>(string statement, IDictionary<string, object> param = null) => await QueryForObject<TDocument>(statement, param);
+
         public async Task<IEnumerable<DataObject>> QueryForList(string statement, DataObject param = null)
         {
             return await dbConnection.QueryAsync<DataObject>(statement, param);
         }
+
+        public async Task<IEnumerable<TDocument>> QueryForList<TDocument>(string statement, DataObject param = null)
+        {
+            return await dbConnection.QueryAsync<TDocument>(statement, param);
+        }
+
         public async Task<IEnumerable<DataObject>> QueryForList(string statement, IDictionary<string, object> param = null) => await QueryForList(statement, param);
+
+        public async Task<IEnumerable<TDocument>> QueryForList<TDocument>(string statement, IDictionary<string, object> param = null) => await QueryForList<TDocument>(statement, param);
+
         public void Dispose()
         {
             Dispose(true);
