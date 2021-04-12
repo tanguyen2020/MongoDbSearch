@@ -3,21 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADOConnection", "FactoryConnection\ADOConnection.csproj", "{6633EFE5-63B2-4F71-85E0-562C7CE14DB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADOConnection", "FactoryConnection\ADOConnection.csproj", "{6633EFE5-63B2-4F71-85E0-562C7CE14DB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcuteService", "ExcuteService\ExcuteService.csproj", "{09F0AE58-C369-4F1E-A92F-E51902CA61AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcuteService", "ExcuteService\ExcuteService.csproj", "{09F0AE58-C369-4F1E-A92F-E51902CA61AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{2C67C82F-D89C-4E0C-8031-C4330C62CFC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentation\Presentation.csproj", "{2C67C82F-D89C-4E0C-8031-C4330C62CFC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheOrSearchEngine", "CacheOrSearchEngine\CacheOrSearchEngine.csproj", "{FCA437F4-D170-408E-A91B-1E543094249C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CacheOrSearchEngine", "CacheOrSearchEngine\CacheOrSearchEngine.csproj", "{FCA437F4-D170-408E-A91B-1E543094249C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseObject", "BaseObject\BaseObject.csproj", "{D794D5C0-8F22-4361-95B6-130638E85324}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseObject", "BaseObject\BaseObject.csproj", "{D794D5C0-8F22-4361-95B6-130638E85324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFConnection", "EFConnection\EFConnection.csproj", "{6F769657-AE67-4212-84A7-432B09262A42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFConnection", "EFConnection\EFConnection.csproj", "{6F769657-AE67-4212-84A7-432B09262A42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseContext", "ModelDbContext\DatabaseContext.csproj", "{6822F274-9376-4A7A-B9A6-EDF022D49790}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseContext", "ModelDbContext\DatabaseContext.csproj", "{6822F274-9376-4A7A-B9A6-EDF022D49790}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{BEC42320-1F8D-4B5D-8CA7-5526B08B3F95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{BEC42320-1F8D-4B5D-8CA7-5526B08B3F95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalledApi", "CalledApi\CalledApi.csproj", "{021CFAC2-5BDF-4ADE-B8AD-C1443BF18A77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{BEC42320-1F8D-4B5D-8CA7-5526B08B3F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEC42320-1F8D-4B5D-8CA7-5526B08B3F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEC42320-1F8D-4B5D-8CA7-5526B08B3F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{021CFAC2-5BDF-4ADE-B8AD-C1443BF18A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{021CFAC2-5BDF-4ADE-B8AD-C1443BF18A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{021CFAC2-5BDF-4ADE-B8AD-C1443BF18A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{021CFAC2-5BDF-4ADE-B8AD-C1443BF18A77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

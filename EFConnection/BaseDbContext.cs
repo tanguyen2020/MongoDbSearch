@@ -64,10 +64,7 @@ namespace EFConnection
         /// <returns></returns>
         public async Task<TDocument> QueryForObjectAsync<TDocument>(string sql, bool executeStored = false, IDictionary<string, object> param = null)
         {
-            if (executeStored)
-                return await base.Database.GetDbConnection().QueryFirstAsync<TDocument>($"Exec {sql}", ParseParameters(param));
-            else
-                return await base.Database.GetDbConnection().QueryFirstAsync<TDocument>(sql, ParseParameters(param));
+            return await base.Database.GetDbConnection().QueryFirstAsync<TDocument>(executeStored ? $"Exec {sql}" : sql, ParseParameters(param));
         }
 
         /// <summary>
@@ -84,10 +81,7 @@ namespace EFConnection
         /// <returns></returns>
         public async Task<IEnumerable<TDocument>> QueryForListAsync<TDocument>(string sql, bool executeStored = false, IDictionary<string, object> param = null)
         {
-            if (executeStored)
-                return await base.Database.GetDbConnection().QueryAsync<TDocument>($"Exec {sql}", ParseParameters(param));
-            else
-                return await base.Database.GetDbConnection().QueryAsync<TDocument>(sql, ParseParameters(param));
+            return await base.Database.GetDbConnection().QueryAsync<TDocument>(executeStored ? $"Exec {sql}" : sql, ParseParameters(param));
         }
 
         public Dictionary<string, object> ParseParameters(IDictionary<string, object> param)

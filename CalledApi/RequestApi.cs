@@ -1,0 +1,160 @@
+﻿using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CalledApi
+{
+    public class RequestApi : IRequestApi
+    {
+        private readonly IHttpClientFactory _httpClientFactory;
+        public RequestApi(IHttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+        }
+        public async Task<T> SendGetAsync<T>(string apiName, string url, T content, List<KeyValuePair<string, string>> httpHeader)
+        {
+            return await Send<T>(apiName, url, content, httpHeader, HttpMethod.Get);
+        }
+
+        public async Task<T> SendGetAsync<T>(string apiName, string url)
+        {
+            try
+            {
+                var httpClient = _httpClientFactory.CreateHttpClient(apiName);
+                var result = await httpClient.GetAsync(url);
+                if (result.IsSuccessStatusCode)
+                    return JsonConvert.DeserializeObject<T>(result.Content.ReadAsStringAsync().Result);
+
+                return default(T);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<T> SendPostAsync<T>(string apiName, string url, T content, List<KeyValuePair<string, string>> httpHeader)
+        {
+            return await Send<T>(apiName, url, content, httpHeader, HttpMethod.Post);
+        }
+
+        public async Task<T> SendPostAsync<T>(string apiName, string url, T content)
+        {
+            try
+            {
+                var httpClient = _httpClientFactory.CreateHttpClient(apiName);
+                HttpContent httpContent = new StringContent(!content.IsNull() ? JsonConvert.SerializeObject(content, Formatting.Indented) : JsonConvert.SerializeObject("{}", Formatting.Indented), UTF8Encoding.UTF8, "application/json");
+                var result = await httpClient.PostAsync(url, httpContent);
+                if (result.IsSuccessStatusCode)
+                    return JsonConvert.DeserializeObject<T>(result.Content.ReadAsStringAsync().Result);
+
+                return default(T);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<T> SendPutAsync<T>(string apiName, string url, T content, List<KeyValuePair<string, string>> httpHeader)
+        {
+            return await Send<T>(apiName, url, content, httpHeader, HttpMethod.Put);
+        }
+
+        public async Task<T> SendPutAsync<T>(string apiName, string url, T content)
+        {
+            try
+            {
+                var httpClient = _httpClientFactory.CreateHttpClient(apiName);
+                HttpContent httpContent = new StringContent(!content.IsNull() ? JsonConvert.SerializeObject(content, Formatting.Indented) : JsonConvert.SerializeObject("{}", Formatting.Indented), UTF8Encoding.UTF8, "application/json");
+                var result = await httpClient.PutAsync(url, httpContent);
+                if (result.IsSuccessStatusCode)
+                    return JsonConvert.DeserializeObject<T>(result.Content.ReadAsStringAsync().Result);
+                return default(T);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<T> SendDeleteAsync<T>(string apiName, string url, T content, List<KeyValuePair<string, string>> httpHeader)
+        {
+            return await Send<T>(apiName, url, content, httpHeader, HttpMethod.Delete);
+        }
+
+        public async Task<T> SendDeleteAsync<T>(string apiName, string url)
+        {
+            try
+            {
+                var httpClient = _httpClientFactory.CreateHttpClient(apiName);
+                var result = await httpClient.DeleteAsync(url);
+                if (result.IsSuccessStatusCode)
+                    return JsonConvert.DeserializeObject<T>(result.Content.ReadAsStringAsync().Result);
+                return default(T);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<T> Send<T>(string apiName, string url, T content, List<KeyValuePair<string, string>> httpHeader, HttpMethod method)
+        {
+            try
+            {
+                var httpClient = _httpClientFactory.CreateHttpClient(apiName);
+                var httpRequest = new HttpRequestMessage()
+                {
+                    RequestUri = new Uri(url),
+                    Method = method,
+                    Content = new StringContent(!content.IsNull() ? JsonConvert.SerializeObject(content, Formatting.Indented) : JsonConvert.SerializeObject("{}", Formatting.Indented), UTF8Encoding.UTF8, "application/json")
+                };
+
+                var accessToken = GenerateToken("");
+                httpRequest.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+
+                HttpResponseMessage result;
+                if(httpHeader != null)
+                {
+                    foreach (var item in httpHeader)
+                    {
+                        httpRequest.Headers.Add(item.Key, item.Value);
+                    }
+                }
+                result = await httpClient.SendAsync(httpRequest);
+                if (result.IsSuccessStatusCode)
+                    return JsonConvert.DeserializeObject<T>(await result.Content.ReadAsStringAsync());
+
+                return default(T);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public string GenerateToken(string audId, int? userId = null)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(audId));
+            var tokenHanlder = new JwtSecurityTokenHandler();
+            var tokenDescriptor = new SecurityTokenDescriptor()
+            {
+                Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, userId.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddMinutes(10),
+                Audience = audId,
+                SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature)
+            };
+            return tokenHanlder.WriteToken(tokenHanlder.CreateToken(tokenDescriptor));
+        }
+    }
+}
