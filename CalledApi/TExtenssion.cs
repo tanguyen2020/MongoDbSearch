@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CalledApi
 {
-    public static class NullT
+    public static class TExtenssion
     {
         public static bool IsNull<T>(this T subject)
         {
