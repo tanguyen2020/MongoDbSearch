@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace CacheOrSearchEngine.MongoDB.Interfaces
 {
-    public interface ISearchMongoAsync
+    public interface ISearchQueryMongoAsync
     {
         /// <summary>
         /// Search like characters

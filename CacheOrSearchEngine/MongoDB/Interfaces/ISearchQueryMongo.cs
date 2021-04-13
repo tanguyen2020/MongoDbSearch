@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BaseObject.DataObject;
 
 namespace CacheOrSearchEngine.MongoDB.Interfaces
 {
-    public interface ISearchMongo: ISearchMongoAsync
+    public interface ISearchQueryMongo: ISearchQueryMongoAsync
     {
         /// <summary>
         /// Search like characters

@@ -19,9 +19,10 @@ namespace CacheOrSearchEngine.DI
             services.AddSingleton<IElasticSearchFactory, ElasticSearchFactory>();
             services.AddSingleton<IElasticQuery, ElasticQuery>();
             services.AddSingleton<ICacheMongo, CacheMongo>();
-            services.AddSingleton<ISearchMongo, SearchMongo>();
+            services.AddSingleton<ISearchQueryMongo, SearchQuery>();
             services.AddSingleton<IMongoDBSearchFactory, MongoDBSearchFactory>();
             services.AddSingleton<IConfigMongDB, ConfigMongDB>();
+            services.AddSingleton<IMongoSearch, MongoSearch>();
             return services;
         }
     }

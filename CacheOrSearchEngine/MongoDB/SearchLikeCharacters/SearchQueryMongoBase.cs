@@ -7,18 +7,22 @@ using BaseObject.DataObject;
 
 namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
 {
-    public class SearchMongo : ISearchMongo
+    public abstract class SearchQueryMongoBase : ISearchQueryMongo
     {
         private readonly IConfigMongDB _configMongDB;
         private readonly IMongoDBSearchFactory _mongoDBSearchFactory;
-        private readonly IMongoCollection<DataObject> _collection;
-        public SearchMongo(IMongoDBSearchFactory mongoDBSearchFactory, IConfigMongDB configMongDB)
+        private readonly string _collectionSearch;
+        private readonly IMongoDatabase _database;
+        public SearchQueryMongoBase(IMongoDBSearchFactory mongoDBSearchFactory, IConfigMongDB configMongDB, string collectionSearch)
         {
             _mongoDBSearchFactory = mongoDBSearchFactory;
             _configMongDB = configMongDB;
-            _collection = _mongoDBSearchFactory.MongoClient(_configMongDB.ConnectionString)
-                        .GetDatabase(_configMongDB.DatabaseMongDB).GetCollection<DataObject>(_configMongDB.CollectionSearch);
+            _database = _mongoDBSearchFactory.MongoClient(_configMongDB.ConnectionString).GetDatabase(_configMongDB.DatabaseMongDB);
+            _collectionSearch = collectionSearch;
         }
+
+
+        public IMongoCollection<DataObject> Collection => _database.GetCollection<DataObject>(_collectionSearch);
 
         /// <summary>
         /// Delete all value on the collection
@@ -35,7 +39,7 @@ namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
         /// <param name="documents"></param>
         public void Add(IEnumerable<DataObject> documents)
         {
-            _collection.InsertMany(documents);
+            Collection.InsertMany(documents);
         }
 
         /// <summary>
@@ -55,9 +59,9 @@ namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
         /// <returns></returns>
         public async Task<bool> RemoveAllAsync()
         {
-            var all = _collection.Find(_ => true).ToList();
+            var all = Collection.Find(_ => true).ToList();
             var values = all.Select(o => o["Value"]);
-            var deletes = await _collection.DeleteManyAsync(Builders<DataObject>.Filter.In(o => o["Value"], values));
+            var deletes = await Collection.DeleteManyAsync(Builders<DataObject>.Filter.In(o => o["Value"], values));
             if (deletes.DeletedCount > 0) return true;
             return false;
         }
@@ -73,7 +77,7 @@ namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
         /// <returns></returns>
         public async Task AddAsync(IEnumerable<DataObject> documents)
         {
-            await _collection.InsertManyAsync(documents);
+            await Collection.InsertManyAsync(documents);
         }
 
         /// <summary>
@@ -85,7 +89,7 @@ namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
         {
             try
             {
-                return await _collection.Find($"{{value: /{item}/ }}").ToListAsync();
+                return await Collection.Find($"{{value: /{item}/ }}").ToListAsync();
             }
             catch
             {
