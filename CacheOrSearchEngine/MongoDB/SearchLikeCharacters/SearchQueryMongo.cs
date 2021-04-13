@@ -7,20 +7,19 @@ using BaseObject.DataObject;
 
 namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
 {
-    public abstract class SearchQueryMongoBase : ISearchQueryMongo
+    public class SearchQueryMongo : ISearchQueryMongo
     {
         private readonly IConfigMongDB _configMongDB;
         private readonly IMongoDBSearchFactory _mongoDBSearchFactory;
         private readonly string _collectionSearch;
         private readonly IMongoDatabase _database;
-        public SearchQueryMongoBase(IMongoDBSearchFactory mongoDBSearchFactory, IConfigMongDB configMongDB, string collectionSearch)
+        public SearchQueryMongo(IMongoDBSearchFactory mongoDBSearchFactory, IConfigMongDB configMongDB, string collectionSearch)
         {
             _mongoDBSearchFactory = mongoDBSearchFactory;
             _configMongDB = configMongDB;
             _database = _mongoDBSearchFactory.MongoClient(_configMongDB.ConnectionString).GetDatabase(_configMongDB.DatabaseMongDB);
             _collectionSearch = collectionSearch;
         }
-
 
         public IMongoCollection<DataObject> Collection => _database.GetCollection<DataObject>(_collectionSearch);
 

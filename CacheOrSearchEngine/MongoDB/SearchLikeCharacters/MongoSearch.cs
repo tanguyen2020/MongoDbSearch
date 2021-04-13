@@ -17,7 +17,7 @@ namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
 
         public ISearchQueryMongo GetCollection(string collection)
         {
-            return new SearchQuery(_mongoDBSearchFactory, _configMongDB, collection);
+            return new SearchQueryMongo(_mongoDBSearchFactory, _configMongDB, collection);
         }
     }
 }
