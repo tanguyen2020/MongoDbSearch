@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BaseObject.DataObject;
+using MongoDB.Bson;
 
 namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
 {
@@ -23,6 +24,13 @@ namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
 
         public IMongoCollection<DataObject> Collection => _database.GetCollection<DataObject>(_collectionSearch);
 
+        public bool Exists()
+        {
+            var filter = new BsonDocument("name", _collectionSearch);
+            var options = new ListCollectionNamesOptions { Filter = filter };
+            return _database.ListCollectionNames(options).Any();
+        }
+
         /// <summary>
         /// Delete all value on the collection
         /// Returns:
@@ -38,7 +46,10 @@ namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
         /// <param name="documents"></param>
         public void Add(IEnumerable<DataObject> documents)
         {
-            Collection.InsertMany(documents);
+            if (Exists())
+            {
+                Collection.InsertMany(documents);
+            }
         }
 
         /// <summary>
@@ -58,6 +69,7 @@ namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
         /// <returns></returns>
         public async Task<bool> RemoveAllAsync()
         {
+            if (!Exists()) return false;
             var all = Collection.Find(_ => true).ToList();
             var values = all.Select(o => o["Value"]);
             var deletes = await Collection.DeleteManyAsync(Builders<DataObject>.Filter.In(o => o["Value"], values));
@@ -76,7 +88,10 @@ namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
         /// <returns></returns>
         public async Task AddAsync(IEnumerable<DataObject> documents)
         {
-            await Collection.InsertManyAsync(documents);
+            if (Exists())
+            {
+                await Collection.InsertManyAsync(documents);
+            }
         }
 
         /// <summary>
@@ -88,6 +103,7 @@ namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
         {
             try
             {
+                if (!Exists()) return null;
                 return await Collection.Find($"{{value: /{item}/ }}").ToListAsync();
             }
             catch

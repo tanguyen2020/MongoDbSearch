@@ -6,6 +6,8 @@ namespace CacheOrSearchEngine.MongoDB.Interfaces
 {
     public interface ISearchQueryMongo: ISearchQueryMongoAsync
     {
+        bool Exists();
+
         /// <summary>
         /// Search like characters
         /// </summary>
