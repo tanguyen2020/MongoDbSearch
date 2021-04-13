@@ -21,5 +21,10 @@ namespace ModelDbContext
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseDatabase(_connectionStringSettings.ConnectionString);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
