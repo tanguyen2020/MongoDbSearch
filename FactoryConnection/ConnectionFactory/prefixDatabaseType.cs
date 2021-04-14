@@ -9,5 +9,6 @@ namespace ADOConnection.ConnectionFactory
         public const string MSSQL = "MSSQL";
         public const string ORACLE = "ORACLE";
         public const string POSTGRESQL = "POSTGRESQL";
+        public const string MYSQL = "MYSQL";
     }
 }

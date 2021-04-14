@@ -18,6 +18,8 @@ namespace EFConnection
                     optionsBuilder.UseSqlServer(prefixConnectString); break;
                 case prefixDatabaseType.ORACLE:
                     optionsBuilder.UseOracle(prefixConnectString); break;
+                case prefixDatabaseType.MYSQL:
+                    optionsBuilder.UseMySQL(prefixConnectString); break;
                 default:
                     optionsBuilder.UseNpgsql(prefixConnectString); break;
             }

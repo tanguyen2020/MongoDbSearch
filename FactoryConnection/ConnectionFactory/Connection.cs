@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using ADOConnection.ConnectionFactory.SqlServer;
 using ADOConnection.ConnectionFactory.Oracle;
 using ADOConnection.ConnectionFactory.PostgreSql;
+using ADOConnection.ConnectionFactory.MySql;
 
 namespace ADOConnection.ConnectionFactory
 {
@@ -25,6 +26,8 @@ namespace ADOConnection.ConnectionFactory
                         execute = new ConnectionSql(this, prefixConnectString); break;
                     case prefixDatabaseType.ORACLE:
                         execute = new ConnectionOracle(this, prefixConnectString); break;
+                    case prefixDatabaseType.MYSQL:
+                        execute = new ConnectionMySql(this, prefixConnectString); break;
                     default:
                         execute = new ConnectionPostgre(this, prefixConnectString); break;
                 }
