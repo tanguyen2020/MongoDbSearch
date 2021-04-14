@@ -17,7 +17,7 @@ namespace CalledApi
         {
             _httpClientFactory = httpClientFactory;
         }
-        public async Task<T> SendGetAsync<T>(string apiName, string url, T content, List<KeyValuePair<string, string>> httpHeader)
+        public async Task<T> SendGetAsync<T>(string apiName, string url, HttpContent content, List<KeyValuePair<string, string>> httpHeader)
         {
             return await Send<T>(apiName, url, content, httpHeader, HttpMethod.Get);
         }
@@ -39,18 +39,17 @@ namespace CalledApi
             }
         }
 
-        public async Task<T> SendPostAsync<T>(string apiName, string url, T content, List<KeyValuePair<string, string>> httpHeader)
+        public async Task<T> SendPostAsync<T>(string apiName, string url, HttpContent content, List<KeyValuePair<string, string>> httpHeader)
         {
             return await Send<T>(apiName, url, content, httpHeader, HttpMethod.Post);
         }
 
-        public async Task<T> SendPostAsync<T>(string apiName, string url, T content)
+        public async Task<T> SendPostAsync<T>(string apiName, string url, HttpContent content)
         {
             try
             {
                 var httpClient = _httpClientFactory.CreateHttpClient(apiName);
-                HttpContent httpContent = new StringContent(!content.IsNull() ? JsonConvert.SerializeObject(content, Formatting.Indented) : JsonConvert.SerializeObject("{}", Formatting.Indented), UTF8Encoding.UTF8, "application/json");
-                var result = await httpClient.PostAsync(url, httpContent);
+                var result = await httpClient.PostAsync(url, content);
                 if (result.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<T>(result.Content.ReadAsStringAsync().Result);
 
@@ -62,18 +61,17 @@ namespace CalledApi
             }
         }
 
-        public async Task<T> SendPutAsync<T>(string apiName, string url, T content, List<KeyValuePair<string, string>> httpHeader)
+        public async Task<T> SendPutAsync<T>(string apiName, string url, HttpContent content, List<KeyValuePair<string, string>> httpHeader)
         {
             return await Send<T>(apiName, url, content, httpHeader, HttpMethod.Put);
         }
 
-        public async Task<T> SendPutAsync<T>(string apiName, string url, T content)
+        public async Task<T> SendPutAsync<T>(string apiName, string url, HttpContent content)
         {
             try
             {
                 var httpClient = _httpClientFactory.CreateHttpClient(apiName);
-                HttpContent httpContent = new StringContent(!content.IsNull() ? JsonConvert.SerializeObject(content, Formatting.Indented) : JsonConvert.SerializeObject("{}", Formatting.Indented), UTF8Encoding.UTF8, "application/json");
-                var result = await httpClient.PutAsync(url, httpContent);
+                var result = await httpClient.PutAsync(url, content);
                 if (result.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<T>(result.Content.ReadAsStringAsync().Result);
                 return default(T);
@@ -84,7 +82,7 @@ namespace CalledApi
             }
         }
 
-        public async Task<T> SendDeleteAsync<T>(string apiName, string url, T content, List<KeyValuePair<string, string>> httpHeader)
+        public async Task<T> SendDeleteAsync<T>(string apiName, string url, HttpContent content, List<KeyValuePair<string, string>> httpHeader)
         {
             return await Send<T>(apiName, url, content, httpHeader, HttpMethod.Delete);
         }
@@ -105,22 +103,16 @@ namespace CalledApi
             }
         }
 
-        public async Task<T> Send<T>(string apiName, string url, T content, List<KeyValuePair<string, string>> httpHeader, HttpMethod method)
+        public async Task<T> Send<T>(string apiName, string url, HttpContent content, List<KeyValuePair<string, string>> httpHeader, HttpMethod method)
         {
             try
             {
                 var httpClient = _httpClientFactory.CreateHttpClient(apiName);
-                var httpRequest = new HttpRequestMessage()
-                {
-                    RequestUri = new Uri(url),
-                    Method = method,
-                    Content = new StringContent(!content.IsNull() ? JsonConvert.SerializeObject(content, Formatting.Indented) : JsonConvert.SerializeObject("{}", Formatting.Indented), UTF8Encoding.UTF8, "application/json")
-                };
-
+                var httpRequest = new HttpRequestMessage(method, url);
+                httpRequest.Content = content;
                 var accessToken = GenerateToken("");
                 httpRequest.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
 
-                HttpResponseMessage result;
                 if(httpHeader != null)
                 {
                     foreach (var item in httpHeader)
@@ -128,7 +120,7 @@ namespace CalledApi
                         httpRequest.Headers.Add(item.Key, item.Value);
                     }
                 }
-                result = await httpClient.SendAsync(httpRequest);
+                var result = await httpClient.SendAsync(httpRequest);
                 if (result.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<T>(await result.Content.ReadAsStringAsync());
 
