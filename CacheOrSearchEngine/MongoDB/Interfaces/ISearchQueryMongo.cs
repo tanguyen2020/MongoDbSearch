@@ -6,6 +6,16 @@ namespace CacheOrSearchEngine.MongoDB.Interfaces
 {
     public interface ISearchQueryMongo: ISearchQueryMongoAsync
     {
+        /// <summary>
+        /// Create Collection for Mongo
+        /// </summary>
+        /// <returns></returns>
+        bool CreateCollection(string collection);
+
+        /// <summary>
+        /// Check collection exists on Mongo
+        /// </summary>
+        /// <returns></returns>
         bool Exists();
 
         /// <summary>

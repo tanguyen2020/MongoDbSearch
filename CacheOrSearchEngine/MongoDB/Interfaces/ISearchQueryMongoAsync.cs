@@ -7,6 +7,17 @@ namespace CacheOrSearchEngine.MongoDB.Interfaces
     public interface ISearchQueryMongoAsync
     {
         /// <summary>
+        /// Create Collection on Mongo
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> CreateCollectionAsync(string collection);
+
+        /// <summary>
+        /// Check collection exists on Mongo
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> ExistsAsync();
+        /// <summary>
         /// Search like characters
         /// </summary>
         /// <param name="value"></param>

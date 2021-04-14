@@ -24,11 +24,29 @@ namespace CacheOrSearchEngine.MongoDB.SearchLikeCharacters
 
         public IMongoCollection<DataObject> Collection => _database.GetCollection<DataObject>(_collectionSearch);
 
-        public bool Exists()
+
+        public async Task<bool> CreateCollectionAsync(string collection)
+        {
+            try
+            {
+                await _database.CreateCollectionAsync(collection);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool CreateCollection(string collection) => CreateCollectionAsync(collection).Result;
+
+        public bool Exists() => ExistsAsync().Result;
+
+        public async Task<bool> ExistsAsync()
         {
             var filter = new BsonDocument("name", _collectionSearch);
             var options = new ListCollectionNamesOptions { Filter = filter };
-            return _database.ListCollectionNames(options).Any();
+            return await _database.ListCollectionNames(options).AnyAsync();
         }
 
         /// <summary>
