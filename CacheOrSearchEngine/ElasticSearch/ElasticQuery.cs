@@ -93,6 +93,20 @@ namespace CacheOrSearchEngine.ElasticSearch
         /// </summary>
         /// <returns></returns>
         public bool DeleteAllIndex() => DeleteAllIndexAsync().Result;
+
+        /// <summary>
+        /// Check index exists
+        /// <para>
+        /// Returns:
+        ///         1 if index exists, 0 doesn't exists
+        /// </para>
+        /// </summary>
+        /// <param name="indexName"></param>
+        /// <returns></returns>
+        public bool IndexExists(string indexName)
+        {
+            return _elasticSearchFactory.ElasticClient.Indices.Exists(indexName).Exists;
+        }
     }
 
     public class ElasticModel

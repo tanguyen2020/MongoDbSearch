@@ -34,5 +34,16 @@ namespace CacheOrSearchEngine.ElasticSearch
         /// </summary>
         /// <returns></returns>
         bool DeleteAllIndex();
+
+        /// <summary>
+        /// Check index exists
+        /// <para>
+        /// Returns:
+        ///         1 if index exists, 0 doesn't exists
+        /// </para>
+        /// </summary>
+        /// <param name="indexName"></param>
+        /// <returns></returns>
+        bool IndexExists(string indexName);
     }
 }
