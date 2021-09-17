@@ -46,8 +46,6 @@ namespace CacheOrSearchEngine.ElasticSearch
             var boolSearch = new BoolSearch() { Must = new List<Must>() { must } };
 
             var query = new Query() { Bool = boolSearch };
-            var order = new OrderBy() { Order = "asc" };
-            var sort = new Sort() { Score = order };
 
             var body = new BuildBodyDelete()
             {
