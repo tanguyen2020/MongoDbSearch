@@ -37,7 +37,6 @@ namespace CacheOrSearchEngine.ElasticSearch
             var multiMatch = new MultiMatch()
             {
                 Query = queryCondition,
-                TypeSearch = TypeSearchMatch.PhrasePrefix,
                 Fields = memberInfos.ToArray()
             };
 
