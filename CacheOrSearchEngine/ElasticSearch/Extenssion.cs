@@ -52,5 +52,28 @@ namespace CacheOrSearchEngine.ElasticSearch
             };
             return body;
         }
+        
+        public static BuildBodyDelete BuildBodyDelete(string[] queryCondition, IEnumerable<string> memberInfos)
+        {
+            var musts = new List<Must>();
+            foreach (var item in queryCondition)
+            {
+                var multiMatch = new MultiMatch()
+                {
+                    Query = item,
+                    Fields = memberInfos.ToArray()
+                };
+                musts.Add(new Must() { MultiMatch = multiMatch });
+            }
+            var boolSearch = new BoolSearch() { Must = musts };
+
+            var query = new Query() { Bool = boolSearch };
+
+            var body = new BuildBodyDelete()
+            {
+                Query = query
+            };
+            return body;
+        }
     }
 }
