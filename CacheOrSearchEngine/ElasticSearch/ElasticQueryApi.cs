@@ -36,6 +36,21 @@ namespace CacheOrSearchEngine.ElasticSearch
             requestMessage.Content = new StringContent(JsonConvert.SerializeObject(body, Formatting.Indented), UTF8Encoding.UTF8, "application/json");
             await httpClient.SendAsync(requestMessage);
         }
+        
+        public async Task DeleteAsync<TDocument>(string[] query, string indexName)
+        {
+            MemberInfo[] members = typeof(TDocument).GetMembers();
+            var memberInfos = members.Where(p => p.MemberType == MemberTypes.Property).Select(x => x.Name);
+
+            var body = Extenssion.BuildBodyDelete(query, memberInfos);
+
+            HttpClient httpClient = new HttpClient();
+            HttpRequestMessage requestMessage = new HttpRequestMessage();
+            requestMessage.Method = System.Net.Http.HttpMethod.Post;
+            requestMessage.RequestUri = new Uri($"http://localhost:9200/{indexName}/_delete_by_query");
+            requestMessage.Content = new StringContent(JsonConvert.SerializeObject(body, Formatting.Indented), UTF8Encoding.UTF8, "application/json");
+            await httpClient.SendAsync(requestMessage);
+        }
 
         public async Task DeleteIndexAsync(string indexName)
         {
