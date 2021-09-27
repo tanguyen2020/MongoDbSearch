@@ -22,12 +22,9 @@ namespace CacheOrSearchEngine.ElasticSearch
             await httpClient.SendAsync(requestMessage);
         }
 
-        public async Task DeleteAsync<TDocument>(string query, string indexName)
+        public async Task DeleteAsync(string query, string indexName, IEnumerable<string> fields)
         {
-            MemberInfo[] members = typeof(TDocument).GetMembers();
-            var memberInfos = members.Where(p => p.MemberType == MemberTypes.Property).Select(x => x.Name);
-
-            var body = Extenssion.BuildBodyDelete(query, memberInfos);
+            var body = Extenssion.BuildBodyDelete(query, fields);
 
             HttpClient httpClient = new HttpClient();
             HttpRequestMessage requestMessage = new HttpRequestMessage();
@@ -36,13 +33,10 @@ namespace CacheOrSearchEngine.ElasticSearch
             requestMessage.Content = new StringContent(JsonConvert.SerializeObject(body, Formatting.Indented), UTF8Encoding.UTF8, "application/json");
             await httpClient.SendAsync(requestMessage);
         }
-        
-        public async Task DeleteAsync<TDocument>(string[] query, string indexName)
-        {
-            MemberInfo[] members = typeof(TDocument).GetMembers();
-            var memberInfos = members.Where(p => p.MemberType == MemberTypes.Property).Select(x => x.Name);
 
-            var body = Extenssion.BuildBodyDelete(query, memberInfos);
+        public async Task DeleteAsync(string[] query, string indexName, IEnumerable<string> fields)
+        {
+            var body = Extenssion.BuildBodyDelete(query, fields);
 
             HttpClient httpClient = new HttpClient();
             HttpRequestMessage requestMessage = new HttpRequestMessage();
