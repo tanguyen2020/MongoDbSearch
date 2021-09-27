@@ -19,7 +19,6 @@ namespace CacheOrSearchEngine.ElasticSearch
     [Serializable]
     public class BuildBodyDelete
     {
-        public List<Sort> Sort { get; set; }
         [JsonProperty("query")]
         public Query Query { get; set; }
     }
