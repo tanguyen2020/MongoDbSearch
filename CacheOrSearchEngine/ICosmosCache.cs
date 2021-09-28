@@ -153,9 +153,6 @@ namespace Caching.Core
         /// <returns></returns>
         long CacheRemoveContainsKey(string key);
 
-
-        string CacheFindKey(string appDate, string id, string keyRequest);
-
         /// <summary>
         /// Removes the specified key. A key is ignored if it does not exist.
         /// </summary>
