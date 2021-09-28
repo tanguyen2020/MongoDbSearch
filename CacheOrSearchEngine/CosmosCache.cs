@@ -275,20 +275,6 @@ namespace Caching.Cosmos
             return 0;
         }
 
-        public string CacheFindKey(string appDate, string id, string keyRequest)
-        {
-            if (_configuration.EnableCache)
-            {
-                var resultCache = documentClient.CreateDocumentQuery<CacheResult>(UriFactory.CreateDocumentCollectionUri(_configuration.CosmosDataBaseName, _configuration.CosmosCollection)
-                    , new FeedOptions { EnableCrossPartitionQuery = true }).Where(p => p.key.Contains(appDate) && p.key.Contains(id) && p.key.Contains(keyRequest)).AsEnumerable().FirstOrDefault();
-                if (resultCache != null)
-                {
-                    return resultCache.key;
-                }
-            }
-            return string.Empty;
-        }
-
         /// <summary>
         /// Returns if key exists.
         /// Returns: 1 if the key exists. 0 if the key does not exist.
